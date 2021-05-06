@@ -13,8 +13,13 @@ struct Assingment_quiniApp: App {
 
     var body: some Scene {
         WindowGroup {
+            let isUserLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedin")
+            if (isUserLoggedIn) {
+                SearchLocationsScreen()
+            } else {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            }
         }
     }
 }

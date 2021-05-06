@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A13779CA2643CC9000E52CE6 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13779C92643CC9000E52CE6 /* MapView.swift */; };
+		A13779CC2644339100E52CE6 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13779CB2644339100E52CE6 /* MapViewModel.swift */; };
+		A13779CE2644358300E52CE6 /* SearchLocationsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13779CD2644358300E52CE6 /* SearchLocationsScreen.swift */; };
+		A13779D0264467F800E52CE6 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13779CF264467F800E52CE6 /* Location.swift */; };
 		A172B5762642B5BE00D1EA68 /* Assingment_quiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B5752642B5BE00D1EA68 /* Assingment_quiniApp.swift */; };
 		A172B5782642B5BE00D1EA68 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B5772642B5BE00D1EA68 /* ContentView.swift */; };
 		A172B57A2642B5BE00D1EA68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A172B5792642B5BE00D1EA68 /* Assets.xcassets */; };
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A13779C92643CC9000E52CE6 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		A13779CB2644339100E52CE6 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		A13779CD2644358300E52CE6 /* SearchLocationsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationsScreen.swift; sourceTree = "<group>"; };
+		A13779CF264467F800E52CE6 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		A172B5722642B5BE00D1EA68 /* Assingment_quini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assingment_quini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A172B5752642B5BE00D1EA68 /* Assingment_quiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assingment_quiniApp.swift; sourceTree = "<group>"; };
 		A172B5772642B5BE00D1EA68 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,6 +114,10 @@
 				A172B5832642B5BE00D1EA68 /* Info.plist */,
 				A172B5802642B5BE00D1EA68 /* Assingment_quini.xcdatamodeld */,
 				A172B57B2642B5BE00D1EA68 /* Preview Content */,
+				A13779C92643CC9000E52CE6 /* MapView.swift */,
+				A13779CB2644339100E52CE6 /* MapViewModel.swift */,
+				A13779CD2644358300E52CE6 /* SearchLocationsScreen.swift */,
+				A13779CF264467F800E52CE6 /* Location.swift */,
 			);
 			path = Assingment_quini;
 			sourceTree = "<group>";
@@ -267,8 +279,12 @@
 			files = (
 				A172B57F2642B5BE00D1EA68 /* Persistence.swift in Sources */,
 				A172B5782642B5BE00D1EA68 /* ContentView.swift in Sources */,
+				A13779D0264467F800E52CE6 /* Location.swift in Sources */,
+				A13779CA2643CC9000E52CE6 /* MapView.swift in Sources */,
 				A172B5762642B5BE00D1EA68 /* Assingment_quiniApp.swift in Sources */,
+				A13779CE2644358300E52CE6 /* SearchLocationsScreen.swift in Sources */,
 				A172B5822642B5BE00D1EA68 /* Assingment_quini.xcdatamodeld in Sources */,
+				A13779CC2644339100E52CE6 /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
