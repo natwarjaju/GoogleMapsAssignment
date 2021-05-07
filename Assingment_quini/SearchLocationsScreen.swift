@@ -13,6 +13,10 @@ struct SearchLocationsScreen: View {
 
     @State var locationManager = CLLocationManager()
     
+    @State var shouldDisplayHistoryScreen: Bool = false
+    
+    @State var shouldSignOut = false
+    
     var body: some View {
         ZStack{
             MapView()
@@ -20,7 +24,12 @@ struct SearchLocationsScreen: View {
                 .ignoresSafeArea(.all, edges: .all)
             VStack {
                 HStack(spacing: 0) {
-                    TextField("Search", text: $viewModel.searchFieldText)
+                    TextField("Search", text: $viewModel.searchFieldText, onEditingChanged: { focused in
+                        if (viewModel.searchFieldText == "") {
+                            viewModel.mapView.removeOverlays(viewModel.mapView.overlays)
+                            viewModel.mapView.removeAnnotations(viewModel.mapView.annotations)
+                        }
+                    })
                         .padding()
                         .background(Color.white)
                     Image(systemName: "magnifyingglass")
@@ -31,6 +40,33 @@ struct SearchLocationsScreen: View {
 
                 VStack {
                     Spacer()
+                    
+                    Button(action: {
+                        shouldSignOut = true
+                        UserDefaults.standard.set(false, forKey: "isUserLoggedin")
+                    },
+                    label: {
+                        Image("powerOff")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .font(.title2)
+                            .padding(20)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .frame(width: 80, height: 80)
+                    })
+
+                    Button(action: { shouldDisplayHistoryScreen = true },
+                           label: {
+                            Image("historyIcon")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .font(.title2)
+                                .padding(20)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .frame(width: 80, height: 80)
+                           })
                     
                     Button(action: { focusOnCurrentUserLocation() },
                            label: {
@@ -55,11 +91,12 @@ struct SearchLocationsScreen: View {
                                     .padding()
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .onTapGesture {
-                                        viewModel.drawPinAndPathForSelectionLocation(location: location)
+                                        if let coordinate = location.location.location?.coordinate {
+                                        viewModel.drawPinAndPathForSelectionLocation(location:coordinate, name: location.location.name ?? "")
+                                        }
                                     }
-                                
                                 Divider()
-                            }
+                                }
                         } else if (viewModel.searchResultsError != nil
                                     && viewModel.searchFieldText != ""
                                     && !viewModel.didRenderPinAndPath) {
@@ -73,13 +110,89 @@ struct SearchLocationsScreen: View {
                     .background(Color.white)
             }
             .offset(y: 50)
+            
+            if (shouldSignOut) {
+                ContentView()
+            }
+           
+            if (shouldDisplayHistoryScreen) {
+                ZStack() {
+                    VStack {
+                        Text("Search History")
+                            .bold()
+                            .padding()
+                            .background(Color.white)
+                            .foregroundColor(Color.black)
+                            .padding(.top, 30)
+                        List {
+                            let savedLocations = viewModel.dataManager.getSavedLocations()
+                            if (savedLocations != []) {
+                                ForEach(savedLocations){ location in
+                                    Text(location.name ?? "")
+                                        .padding()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .onTapGesture {
+                                            let Coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.lognitude)
+                                            viewModel.drawPinAndPathForSelectionLocation(location: Coordinate, name:location.name ?? "", isFromHistoryView: true)
+                                            shouldDisplayHistoryScreen = false
+                                        }
+                                }
+                            }
+                        }
+                        .background(Color.red)
+                        .ignoresSafeArea()
+                    }
+                    .background(Color.white)
+                    .ignoresSafeArea()
+                    
+                    VStack{
+                        Spacer()
+
+                        Button(action: {
+                            shouldDisplayHistoryScreen = false
+                            shouldSignOut = true
+                            UserDefaults.standard.set(false, forKey: "isUserLoggedin")
+                        },
+                        label: {
+                            Image("powerOff")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .font(.title2)
+                                .padding(20)
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .frame(width: 80, height: 80)
+                        })
+
+                        Button(action: { shouldDisplayHistoryScreen = false },
+                               label: {
+                                Image(systemName: "xmark")
+                                    .aspectRatio(contentMode: .fit)
+                                    .font(.title2)
+                                    .padding(20)
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                               })
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+            }
+            
         }
         .onAppear(perform: {
             locationManager.delegate = viewModel
-            locationManager.requestWhenInUseAuthorization()
+            if (locationManager.authorizationStatus == .authorizedAlways
+                    || locationManager.authorizationStatus == .authorizedWhenInUse) {
+            locationManager.startUpdatingLocation()
+                return
+            }
+                locationManager.requestWhenInUseAuthorization()
         })
         .alert(isPresented: $viewModel.permissionDenied, content: {
             createPermissionDeniedAlert()
+        })
+        .alert(isPresented: $viewModel.directionsNotFoundError, content: {
+            createNoDriectionsFoundAlert()
         })
         .onTapGesture {
             hideKeyboard()
@@ -112,6 +225,14 @@ struct SearchLocationsScreen: View {
                         // Redirect to device settings.
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                      }))
+    }
+
+    fileprivate func createNoDriectionsFoundAlert() -> Alert {
+        return Alert(title: Text("Directions could not be found.."),
+                 message: Text("Please try other nearby locations"),
+                 dismissButton: .default(Text("Ok"), action: {
+                    viewModel.directionsNotFoundError = false
+                 }))
     }
 
 }

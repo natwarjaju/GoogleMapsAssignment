@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct Assingment_quiniApp: App {
-    let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
@@ -18,7 +17,6 @@ struct Assingment_quiniApp: App {
                 SearchLocationsScreen()
             } else {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
     }

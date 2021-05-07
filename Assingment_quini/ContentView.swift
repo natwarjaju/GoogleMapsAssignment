@@ -9,12 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
     var errorText: String = "Invalid credentials please try again...!"
     let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
 
@@ -58,13 +53,9 @@ struct ContentView: View {
                                                 if (userName == validUserName && password == validPassword) {
                                                     self.isUserAuthenticatedSuccessfully = true
                                                     UserDefaults.standard.set(true, forKey: "isUserLoggedin")
-                                                   // userName = ""
-                                                    //password = ""
                                                     isMapViewPresented = true
                                                 } else {
                                                     self.isUserAuthenticatedSuccessfully = false
-                                                    //userName = ""
-                                                    //password = ""
                                                     isMapViewPresented = false
                                                 }
                                             }, label: {
@@ -74,15 +65,6 @@ struct ContentView: View {
                                        })
                     }
                 }
-            }
-        }
-    }
-
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            Group {
-                ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-                ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             }
         }
     }

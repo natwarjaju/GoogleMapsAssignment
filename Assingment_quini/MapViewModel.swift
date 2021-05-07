@@ -26,6 +26,10 @@ class MapViewModel:NSObject, ObservableObject, CLLocationManagerDelegate  {
     
     @Published var currentUserLocation: CLLocation?
     
+    @Published var directionsNotFoundError = false
+    
+    @State var dataManager = coreDataManager()
+    
     func searchLocations() {
         self.locations.removeAll()
 
@@ -42,17 +46,15 @@ class MapViewModel:NSObject, ObservableObject, CLLocationManagerDelegate  {
                 return Location(location: Item.placemark)
             })
         })
-        
     }
-    
-    func drawPinAndPathForSelectionLocation(location: Location) {
-        guard let locationCoordinate = location.location.location?.coordinate,
-              let currentUserLocation = currentUserLocation else {
+
+    func drawPinAndPathForSelectionLocation(location: CLLocationCoordinate2D, name: String, isFromHistoryView: Bool = false) {
+        guard let currentUserLocation = currentUserLocation else {
             return
         }
         let selectedLocationMarker = MKPointAnnotation()
-        selectedLocationMarker.coordinate = locationCoordinate
-        selectedLocationMarker.title = location.location.name
+        selectedLocationMarker.coordinate = location
+        selectedLocationMarker.title = name
         
         let currentUserLocationMarker = MKPointAnnotation()
         currentUserLocationMarker.coordinate = currentUserLocation.coordinate
@@ -64,12 +66,16 @@ class MapViewModel:NSObject, ObservableObject, CLLocationManagerDelegate  {
         
         let getDirectionsRequest = MKDirections.Request()
         getDirectionsRequest.source = MKMapItem(placemark: MKPlacemark(coordinate: currentUserLocation.coordinate))
-        getDirectionsRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: locationCoordinate))
+        getDirectionsRequest.destination = MKMapItem(placemark: MKPlacemark(coordinate: location))
         
         let directions = MKDirections(request: getDirectionsRequest)
         directions.calculate { (directionsResponse, error) in
             if error != nil {
-                print("MapViewModel" + error!.localizedDescription)
+                print("MapViewModel " + error!.localizedDescription)
+                if (error!.localizedDescription == "Directions Not Available"){
+                    self.directionsNotFoundError = true
+                    self.mapView.removeAnnotations(self.mapView.annotations)
+                }
                 return
             }
             if let fastestRoute = directionsResponse?.routes.first?.polyline {
@@ -77,6 +83,9 @@ class MapViewModel:NSObject, ObservableObject, CLLocationManagerDelegate  {
                 self.mapView.setRegion(MKCoordinateRegion(fastestRoute.boundingMapRect), animated: true)
                 self.mapView.setVisibleMapRect(fastestRoute.boundingMapRect, edgePadding: UIEdgeInsets(top: 50, left: 50, bottom: 50, right: 50), animated: true)
             }
+        }
+        if (!isFromHistoryView) {
+            dataManager.saveSearchedLocation(location: location, name: name)
         }
         locations.removeAll()
         mapView.removeOverlays(mapView.overlays)

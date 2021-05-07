@@ -11,12 +11,12 @@
 		A13779CC2644339100E52CE6 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13779CB2644339100E52CE6 /* MapViewModel.swift */; };
 		A13779CE2644358300E52CE6 /* SearchLocationsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13779CD2644358300E52CE6 /* SearchLocationsScreen.swift */; };
 		A13779D0264467F800E52CE6 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13779CF264467F800E52CE6 /* Location.swift */; };
+		A1382EB8264545220067A25B /* coreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1382EB7264545220067A25B /* coreDataManager.swift */; };
 		A172B5762642B5BE00D1EA68 /* Assingment_quiniApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B5752642B5BE00D1EA68 /* Assingment_quiniApp.swift */; };
 		A172B5782642B5BE00D1EA68 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B5772642B5BE00D1EA68 /* ContentView.swift */; };
 		A172B57A2642B5BE00D1EA68 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A172B5792642B5BE00D1EA68 /* Assets.xcassets */; };
 		A172B57D2642B5BE00D1EA68 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A172B57C2642B5BE00D1EA68 /* Preview Assets.xcassets */; };
-		A172B57F2642B5BE00D1EA68 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B57E2642B5BE00D1EA68 /* Persistence.swift */; };
-		A172B5822642B5BE00D1EA68 /* Assingment_quini.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A172B5802642B5BE00D1EA68 /* Assingment_quini.xcdatamodeld */; };
+		A172B5822642B5BE00D1EA68 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A172B5802642B5BE00D1EA68 /* CoreDataModel.xcdatamodeld */; };
 		A172B58D2642B5BE00D1EA68 /* Assingment_quiniTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B58C2642B5BE00D1EA68 /* Assingment_quiniTests.swift */; };
 		A172B5982642B5BE00D1EA68 /* Assingment_quiniUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172B5972642B5BE00D1EA68 /* Assingment_quiniUITests.swift */; };
 /* End PBXBuildFile section */
@@ -43,12 +43,12 @@
 		A13779CB2644339100E52CE6 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		A13779CD2644358300E52CE6 /* SearchLocationsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationsScreen.swift; sourceTree = "<group>"; };
 		A13779CF264467F800E52CE6 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		A1382EB7264545220067A25B /* coreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coreDataManager.swift; sourceTree = "<group>"; };
 		A172B5722642B5BE00D1EA68 /* Assingment_quini.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assingment_quini.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A172B5752642B5BE00D1EA68 /* Assingment_quiniApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assingment_quiniApp.swift; sourceTree = "<group>"; };
 		A172B5772642B5BE00D1EA68 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A172B5792642B5BE00D1EA68 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A172B57C2642B5BE00D1EA68 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		A172B57E2642B5BE00D1EA68 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A172B5812642B5BE00D1EA68 /* Assingment_quini.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Assingment_quini.xcdatamodel; sourceTree = "<group>"; };
 		A172B5832642B5BE00D1EA68 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A172B5882642B5BE00D1EA68 /* Assingment_quiniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Assingment_quiniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -110,14 +110,14 @@
 				A172B5752642B5BE00D1EA68 /* Assingment_quiniApp.swift */,
 				A172B5772642B5BE00D1EA68 /* ContentView.swift */,
 				A172B5792642B5BE00D1EA68 /* Assets.xcassets */,
-				A172B57E2642B5BE00D1EA68 /* Persistence.swift */,
 				A172B5832642B5BE00D1EA68 /* Info.plist */,
-				A172B5802642B5BE00D1EA68 /* Assingment_quini.xcdatamodeld */,
+				A172B5802642B5BE00D1EA68 /* CoreDataModel.xcdatamodeld */,
 				A172B57B2642B5BE00D1EA68 /* Preview Content */,
 				A13779C92643CC9000E52CE6 /* MapView.swift */,
 				A13779CB2644339100E52CE6 /* MapViewModel.swift */,
 				A13779CD2644358300E52CE6 /* SearchLocationsScreen.swift */,
 				A13779CF264467F800E52CE6 /* Location.swift */,
+				A1382EB7264545220067A25B /* coreDataManager.swift */,
 			);
 			path = Assingment_quini;
 			sourceTree = "<group>";
@@ -277,13 +277,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A172B57F2642B5BE00D1EA68 /* Persistence.swift in Sources */,
 				A172B5782642B5BE00D1EA68 /* ContentView.swift in Sources */,
 				A13779D0264467F800E52CE6 /* Location.swift in Sources */,
 				A13779CA2643CC9000E52CE6 /* MapView.swift in Sources */,
 				A172B5762642B5BE00D1EA68 /* Assingment_quiniApp.swift in Sources */,
 				A13779CE2644358300E52CE6 /* SearchLocationsScreen.swift in Sources */,
-				A172B5822642B5BE00D1EA68 /* Assingment_quini.xcdatamodeld in Sources */,
+				A1382EB8264545220067A25B /* coreDataManager.swift in Sources */,
+				A172B5822642B5BE00D1EA68 /* CoreDataModel.xcdatamodeld in Sources */,
 				A13779CC2644339100E52CE6 /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -600,13 +600,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		A172B5802642B5BE00D1EA68 /* Assingment_quini.xcdatamodeld */ = {
+		A172B5802642B5BE00D1EA68 /* CoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				A172B5812642B5BE00D1EA68 /* Assingment_quini.xcdatamodel */,
 			);
 			currentVersion = A172B5812642B5BE00D1EA68 /* Assingment_quini.xcdatamodel */;
-			path = Assingment_quini.xcdatamodeld;
+			path = CoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
