@@ -5,16 +5,16 @@
 //  Created by Natwar Jaju on 05/05/21.
 //
 
-import SwiftUI
 import CoreData
+import SwiftUI
+import UIKit
 
 struct ContentView: View {
 
-    var errorText: String = "Invalid credentials please try again...!"
     let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
-
-    var validUserName: String = "natwar@gmail.com"
-    var validPassword: String = "Natwar"
+    var errorText: String = "Invalid credentials please try again...!"
+    var validUserName: String = "abc@quin.design"
+    var validPassword: String = "Quin123"
 
     @State var isUserAuthenticatedSuccessfully: Bool = true
     @State var isMapViewPresented: Bool = false
@@ -25,19 +25,24 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack() {
-                LinearGradient(gradient: Gradient(colors: [Color.orange, Color.red]), startPoint: .topLeading, endPoint: .bottomLeading)
+                LinearGradient(gradient: Gradient(colors: [Color.orange, Color.red]),
+                                                  startPoint: .topLeading,
+                                                  endPoint: .bottomLeading)
                     .ignoresSafeArea()
 
                 VStack {
                     VStack(alignment: .leading) {
                         UserNameField(userName: $userName)
-                        if(!emailPredicate.evaluate(with: userName) && !userName.isEmpty){
-                            Text("Inavlid email format!")
+                        if (!emailPredicate.evaluate(with: userName) && !userName.isEmpty){
+                            Text("Invalid email format...!")
                                 .bold()
                                 .foregroundColor(.white)
                                 .padding(.leading, 10)
                         }
                         PasswordField(password: $password)
+                        if (password.count < 6 && password.count > 0) {
+                            errorView(errorText: "Password should be greater than 6 digits.")
+                        }
                         if (!isUserAuthenticatedSuccessfully) {
                             errorView(errorText: self.errorText)
                         }
@@ -99,7 +104,8 @@ struct ContentView: View {
         var body: some View {
             Text("Login")
                 .padding()
-                .frame(width: UIScreen.main.bounds.width / 2, height: UIScreen.main.bounds.height / 15)
+                .frame(width: UIScreen.main.bounds.width / 2,
+                       height: UIScreen.main.bounds.height / 15)
                 .font(.title)
                 .background(Color.black)
                 .foregroundColor(.white)
@@ -122,10 +128,11 @@ struct ContentView: View {
 
 }
 
-#if canImport(UIKit)
 extension View {
     func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                        to: nil,
+                                        from: nil,
+                                        for: nil)
     }
 }
-#endif

@@ -10,7 +10,7 @@ import CoreData
 
 class  coreDataManager {
     let persistentContainer: NSPersistentContainer
-    
+
     init() {
         persistentContainer = NSPersistentContainer(name: "CoreDataModel")
         persistentContainer.loadPersistentStores {(decription, error) in
@@ -19,23 +19,23 @@ class  coreDataManager {
             }
         }
     }
-    
+
     func saveSearchedLocation(location: CLLocationCoordinate2D, name: String) {
         let searchedLocation = SearchedLocations(context: persistentContainer.viewContext)
         searchedLocation.name = name
         searchedLocation.latitude = location.latitude as Double
         searchedLocation.lognitude = location.longitude as Double
-        
+
         do{
             try persistentContainer.viewContext.save()
         } catch {
             print("CoreDataManager:" + error.localizedDescription)
         }
     }
-    
+
     func getSavedLocations() -> [SearchedLocations] {
         let fetchRequest: NSFetchRequest<SearchedLocations> = SearchedLocations.fetchRequest()
-        
+
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest).reversed()
         } catch {
@@ -43,6 +43,5 @@ class  coreDataManager {
             return []
         }
     }
-    
     
 }

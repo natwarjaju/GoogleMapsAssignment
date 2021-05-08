@@ -26,9 +26,11 @@ struct MapView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) {
-        
+        // no-op
     }
     
+    // MARK: Coordinator
+
     class Coordinator: NSObject, MKMapViewDelegate {
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {

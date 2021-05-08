@@ -9,7 +9,7 @@ import SwiftUI
 import CoreLocation
 
 struct SearchLocationsScreen: View {
-    @StateObject var viewModel = MapViewModel()
+    @ObservedObject var viewModel = MapViewModel()
 
     @State var locationManager = CLLocationManager()
     
@@ -67,21 +67,23 @@ struct SearchLocationsScreen: View {
                                 .clipShape(Circle())
                                 .frame(width: 80, height: 80)
                            })
-                    
+
                     Button(action: { focusOnCurrentUserLocation() },
                            label: {
-                            Image(systemName: "location.fill")
+                            Image("gpsIcon")
+                                .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .font(.title2)
                                 .padding(20)
-                                .background(Color.primary)
+                                .background(Color.white)
                                 .clipShape(Circle())
+                                .frame(width: 80, height: 80)
                            })
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding()
             }
-            
+
             VStack {
                     ScrollView {
                         if (!viewModel.locations.isEmpty
@@ -99,7 +101,7 @@ struct SearchLocationsScreen: View {
                                 }
                         } else if (viewModel.searchResultsError != nil
                                     && viewModel.searchFieldText != ""
-                                    && !viewModel.didRenderPinAndPath) {
+                                    && viewModel.shouldShowNoResultsFound) {
                             Text("No results found...")
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .top)
@@ -114,7 +116,7 @@ struct SearchLocationsScreen: View {
             if (shouldSignOut) {
                 ContentView()
             }
-           
+
             if (shouldDisplayHistoryScreen) {
                 ZStack() {
                     VStack {
@@ -177,7 +179,7 @@ struct SearchLocationsScreen: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 }
             }
-            
+
         }
         .onAppear(perform: {
             locationManager.delegate = viewModel
@@ -210,7 +212,7 @@ struct SearchLocationsScreen: View {
             })
         })
     }
-    
+
     fileprivate func focusOnCurrentUserLocation() {
         guard let region = viewModel.region  else { return }
         
